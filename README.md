@@ -1,66 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+AgileNest Documentation
+AgileNest is a task/project management application built with Laravel, Laravel Breeze, Spatie Laravel Permission, Bootstrap for styling, and JavaScript for dynamic interactions.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Table of Contents
+Introduction
+Installation
+Install Laravel
+Install Laravel Breeze
+Set Up Database and Environment
+Install Spatie Laravel Permission
+Create Middleware for Role and Permission
+Register Middleware in Kernel
+Usage
+Authentication
+Roles and Permissions
+Customization
+Frontend
+Roles and Permissions
+Troubleshooting
+Contributing
+License
+1. Introduction
+AgileNest is a task/project management application designed to provide a clean and efficient user experience. It leverages Laravel Breeze for authentication, Spatie Laravel Permission for role and permission management, and Bootstrap for styling.
 
-## About Laravel
+2. Installation
+2.1 Install Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+composer create-project laravel/laravel AgileNest
+cd AgileNest
+2.2 Install Laravel Breeze
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+composer require laravel/breeze --dev
+php artisan breeze:install
+npm install
+npm run dev
+2.3 Set Up Database and Environment
+Configure your database connection in the .env file and run migrations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+php artisan migrate
+2.4 Install Spatie Laravel Permission
 
-## Learning Laravel
+composer require spatie/laravel-permission
+php artisan migrate
+2.5 Create Middleware for Role and Permission
+Generate middleware to handle role and permission checks.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+php artisan make:middleware CheckRole
+php artisan make:middleware CheckPermission
+Edit these middleware classes according to your needs.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2.6 Register Middleware in Kernel
+Register the middleware in app/Http/Kernel.php.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+protected $routeMiddleware = [
+    // ... other middleware
+    'role' => \App\Http\Middleware\CheckRole::class,
+    'permission' => \App\Http\Middleware\CheckPermission::class,
+];
+3. Usage
+3.1 Authentication
+AgileNest uses Laravel Breeze for authentication. Utilize the login and registration features provided by Breeze.
 
-## Laravel Sponsors
+3.2 Roles and Permissions
+Utilize Spatie Laravel Permission for managing roles and permissions. Middleware (CheckRole and CheckPermission) has been provided to integrate role and permission checks into routes and controllers.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+4. Customization
+4.1 Frontend
+Customize the frontend by modifying views and assets in the resources/views and resources/assets directories.
 
-### Premium Partners
+4.2 Roles and Permissions
+Customize roles and permissions by adjusting the middleware, database tables, and related functionality provided by Spatie Laravel Permission.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. Troubleshooting
+If encountering authentication issues, verify the Laravel Breeze and Sanctum configurations.
+For roles and permissions, ensure middleware and database tables are set up correctly.
